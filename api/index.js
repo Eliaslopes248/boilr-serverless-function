@@ -29,6 +29,13 @@ const healthCheckRoutes = require("./routes/tests/healthcheck.js");
  */
 app.use("/api/tests", healthCheckRoutes);
 
+app.get("/", (req,res)=>{
+    res.json({
+        status: 200,
+        message: "hello serverless"
+    });
+})
+
 const ENV_TYPE = process.env.ENV_TYPE || null;
 
 // only run listener() in dev env
