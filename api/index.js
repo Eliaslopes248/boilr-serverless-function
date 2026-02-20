@@ -17,7 +17,7 @@ app.use(express.json());
  * @import all route modules from different files to be added to app instance
  */
 
-const healthCheckRoutes = require("routes/tests/healthcheck.js");
+const healthCheckRoutes = require("./routes/tests/healthcheck.js");
 
 
 /**
@@ -26,6 +26,6 @@ const healthCheckRoutes = require("routes/tests/healthcheck.js");
 app.use("/api/tests", healthCheckRoutes);
 
 
-// export for vercels use
-module.exports = app;
+// serverless runtime passes (req, res) to the handler
+module.exports = (req, res) => app(req, res);
 
