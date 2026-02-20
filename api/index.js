@@ -25,7 +25,13 @@ const healthCheckRoutes = require("./routes/tests/healthcheck.js");
  */
 app.use("/api/tests", healthCheckRoutes);
 
+// Root route so /api and /api/ hit the app (rewrite sends all /api/* here)
+app.get("/api", (req, res) => res.status(200).json({ ok: true, message: "API root" }));
+app.get("/api/", (req, res) => res.status(200).json({ ok: true, message: "API root" }));
 
-// serverless runtime passes (req, res) to the handler
-module.exports = (req, res) => app(req, res);
+// 404 for unmatched routes
+app.use((req, res) => res.status(404).json({ error: "Not found", path: req.url }));
+
+// Export for Vercel (docs: export the Express app)
+module.exports = app;
 
