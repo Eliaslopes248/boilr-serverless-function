@@ -16,7 +16,17 @@ router.get(
     (req, res)=>{
         res.status(200).json({
             status:200,
-            message: "API is healthy"
+            message: "API GET is healthy"
+        });
+});
+
+router.post(
+    "/health", 
+    (req, res)=>{
+        res.status(200).json({
+            status:     200,
+            message:    "API POST is healthy",
+            body:       req?.body
         });
 });
 
