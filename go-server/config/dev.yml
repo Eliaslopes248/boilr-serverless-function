@@ -1,0 +1,11 @@
+
+dev-server-config:
+
+  port: 8081
+
+  logfile: devlog.txt
+
+  allow-list:
+    - "*"
+
+  requires-auth: false
