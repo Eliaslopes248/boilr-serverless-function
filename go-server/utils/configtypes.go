@@ -24,16 +24,19 @@ type ServerConfig struct {
 type LogLevel string
 
 const (
-	NO_LOG  LogLevel = "NO_LOG"
 	INFO    LogLevel = "INFO"
 	DEBUG   LogLevel = "DEBUG"
 	WARNING LogLevel = "WARNING"
-	FATAL   LogLevel = "FATAL"
+	ERROR   LogLevel = "ERROR"
 )
 
 // type for logging on the server
 type LoggerConfig struct {
-	LogFiles    []string `yaml:"log-files"`
-	MaxLogLevel LogLevel `yaml:"max-log-level"`
-	MinLogLevel LogLevel `yaml:"min-log-level"`
+	FileOutputHandler []LogFileHandler `yaml:"log-file-handlers"`
+}
+
+// type for file handlers
+type LogFileHandler struct {
+	FilePath string   `yaml:"file-path"`
+	LogLvl   LogLevel `yaml:"level"`
 }

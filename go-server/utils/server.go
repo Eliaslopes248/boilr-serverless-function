@@ -50,7 +50,7 @@ func Get_server_config() (Config, error) {
 		return parentConfig, fmt.Errorf("[ERROR] When mapping yaml to struct")
 	}
 
-	fmt.Printf("LOG FILES: %v", parentConfig.ServerConfig.MethodList)
+	fmt.Printf("LOG FILES: %v", parentConfig.LogConfig.FileOutputHandler)
 
 	return parentConfig, nil
 }

@@ -18,12 +18,11 @@ dev-server-config:
 
 # LOGGING CONFIG
 server-log-config:
-  # LIST OF LOG OUTPUT FILES
-  log-files:
-    - "LOGS/devlog.txt"
 
-  # MINIMUN LOG LEVEL FOR FILE OUTPUT
-  min-log-level: INFO
-
-  # MINIMUN LOG LEVEL FOR FILE OUTPUT
-  max-log-level: FATAL
+  # LIST OF FILE HANDLERS
+  log-file-handlers:
+    - file-path:  LOGS/devlog.txt
+      level:      INFO
+    
+    - file-path:  LOGS/prod.txt
+      level:      INFO
