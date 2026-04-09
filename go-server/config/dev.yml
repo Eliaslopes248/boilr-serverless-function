@@ -1,11 +1,29 @@
-
+# SERVER CONFIG
 dev-server-config:
-
+  # EXPOSED PORTS
   port: 8081
 
-  logfile: devlog.txt
-
+  # CORS ALLOW LIST
   allow-list:
     - "*"
 
+  # ALLOWED SERVER REQUEST METHODS
+  method-list:
+    - GET
+    - POST 
+    - PUT
+
+  # REQUIRES AUTH TOKEN
   requires-auth: false
+
+# LOGGING CONFIG
+server-log-config:
+  # LIST OF LOG OUTPUT FILES
+  log-files:
+    - "LOGS/devlog.txt"
+
+  # MINIMUN LOG LEVEL FOR FILE OUTPUT
+  min-log-level: INFO
+
+  # MINIMUN LOG LEVEL FOR FILE OUTPUT
+  max-log-level: FATAL

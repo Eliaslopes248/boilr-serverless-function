@@ -3,6 +3,7 @@ package utils
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"gopkg.in/yaml.v3"
@@ -14,32 +15,30 @@ import (
 * AUTHOR: Elias Lopes
  */
 
-// parent object wrapper
-type Config struct {
-	ServerConfig ServerConfig `yaml:"dev-server-config"`
-}
-
-// type to map struct to yaml fields
-type ServerConfig struct {
-	ServerPort    int      `yaml:"port"`
-	LogFile       string   `yaml:"logfile"`
-	CorsAllowList []string `yaml:"allow-list"`
-	RequiresAuth  bool     `yaml:"requires-auth"`
-}
-
 // creates the rest servers config
-func Get_server_config() (ServerConfig, error) {
+func Get_server_config() (Config, error) {
+
+	// check env to see what environment type we're running in
+	var configFilePath string = "config/dev.yml"
+
+	// get environment variables
+	envType := os.Getenv("BOILR_SERVER_ENV_TYPE")
+	strings.ToLower(envType)
+
+	if len(envType) > 0 && (envType == "prod" || envType == "production") {
+		configFilePath = "config/prod.yml"
+	}
+
 	// read yaml file into []bytes
-	fileBytes, err := os.ReadFile("config/dev.yml")
+	fileBytes, err := os.ReadFile(configFilePath)
 
 	// create struct for holding config info
 	var parentConfig Config
-	var config ServerConfig
 
 	// handle error
 	if err != nil {
 		fmt.Printf("[ERROR] When reading yaml file bytes: %v", err)
-		return config, err
+		return parentConfig, fmt.Errorf("[ERROR] When reading yaml file bytes")
 	}
 
 	// extract the yaml data and map to struct
@@ -48,17 +47,16 @@ func Get_server_config() (ServerConfig, error) {
 	// handle error
 	if err != nil {
 		fmt.Printf("[ERROR] When mapping yaml to struct: %v", err)
-		return config, err
+		return parentConfig, fmt.Errorf("[ERROR] When mapping yaml to struct")
 	}
 
-	// assign config
-	config = parentConfig.ServerConfig
+	fmt.Printf("LOG FILES: %v", parentConfig.ServerConfig.MethodList)
 
-	return config, nil
+	return parentConfig, nil
 }
 
 // sets up the server logger
-func configure_logger() {
+func configure_logger(config LoggerConfig) {
 
 }
 
